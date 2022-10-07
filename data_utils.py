@@ -126,13 +126,13 @@ def generate_training_queries(agg_type, db_path,sel_id_path, sel_cols, cat_cols,
     endTime = time.time()
     print('generating training predicates took ' + str(endTime-startTime) + ' sec')
 
-    sel_id = np.load(sel_id_path)
-    missing_table_size = sel_id.shape[0]
 
     resample = config['resample']
 
     if resample:
         bias_factor = config["biased_sample_factor"]
+        missing_table_size = int(config["selection_percentile"]*missing_table.shape[0])
+
         biased_sample_size = int(bias_factor*missing_table_size)
         unbiased_sample_size = missing_table_size-int(bias_factor*missing_table_size)
 
@@ -145,6 +145,9 @@ def generate_training_queries(agg_type, db_path,sel_id_path, sel_cols, cat_cols,
             sel_id = np.concatenate([unbiased_ids, biased_ids], axis=0)
         else:
             sel_id = biased_ids
+    else:
+        sel_id = np.load(sel_id_path)
+        missing_table_size = sel_id.shape[0]
 
 
     print('Creating Query Embeddings and Answeer')

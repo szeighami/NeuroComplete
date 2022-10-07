@@ -531,11 +531,11 @@ class imdb_query_runner:
 
 def main():
     sel_percentiles = [0.05, 0.1, 0.2, 0.4, 0.8]
-    bias_factor = [0.6, 0.8, 1.0]
+    bias_factor = [0.8]
     instances = False
 
-    airbnb_queries = ['H1_COUNT', 'H1_AVG', 'H2_COUNT', 'H2_AVG']
-    imdb_queries = ['M1_COUNT', 'M1_AVG', 'M2_COUNT', 'M2_AVG']
+    airbnb_queries = ['H1_AVG']
+    imdb_queries = []
 
     qr = airbnb_query_runner()
     qr.run_queries(sel_percentiles, bias_factor, airbnb_queries, instances)
